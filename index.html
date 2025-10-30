@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Feeding Guide - Mannheim</title>
+    <style>
+        :root {
+            --color-primary: #2d7a4f;
+            --color-primary-dark: #1e5436;
+            --color-secondary: #52a876;
+            --color-background: #f4f9f6;
+            --color-surface: #ffffff;
+            --color-text: #1a3a2a;
+            --color-text-secondary: #4a6b5a;
+            --color-border: #c8ddd3;
+            --color-yes: #52a876;
+            --color-limited: #f0ad4e;
+            --color-no: #e8e8e8;
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: var(--color-text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--color-surface);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(45, 122, 79, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .intro {
+            padding: 24px 32px;
+            background: #f0f7f3;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .intro p {
+            margin-bottom: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .intro ul {
+            margin-left: 24px;
+            color: var(--color-text-secondary);
+        }
+
+        .intro li {
+            margin-bottom: 6px;
+        }
+
+        .table-container {
+            padding: 32px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: white;
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th:first-child {
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--color-border);
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: #f8fcfa;
+        }
+
+        td {
+            padding: 14px 12px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-primary-dark);
+            background: #fafdfb;
+        }
+
+        .cell-yes {
+            background: rgba(82, 168, 118, 0.15);
+            color: var(--color-yes);
+            font-weight: 600;
+        }
+
+        .cell-limited {
+            background: rgba(240, 173, 78, 0.15);
+            color: var(--color-limited);
+            font-weight: 500;
+        }
+
+        .cell-no {
+            background: var(--color-no);
+            color: #999;
+            font-weight: 400;
+        }
+
+        .legend {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            padding: 20px 32px;
+            background: #f0f7f3;
+            border-top: 2px solid var(--color-border);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .legend-yes {
+            background: rgba(82, 168, 118, 0.3);
+        }
+
+        .legend-limited {
+            background: rgba(240, 173, 78, 0.3);
+        }
+
+        .legend-no {
+            background: var(--color-no);
+        }
+
+        footer {
+            padding: 24px 32px;
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            background: #fafdfb;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            header {
+                padding: 24px 16px;
+            }
+
+            .intro, .table-container {
+                padding: 16px;
+            }
+
+            th, td {
+                padding: 10px 6px;
+                font-size: 0.8rem;
+            }
+
+            th:first-child,
+            td:first-child {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 Bird Feeding Guide</h1>
+            <p class="subtitle">Common Small Birds in Mannheim (Excluding Corvids)</p>
+        </header>
+
+        <div class="intro">
+            <p><strong>Quick Tips for Your Windowsill:</strong></p>
+            <ul>
+                <li><strong>Tits:</strong> Crushed peanuts, sunflower hearts (chipped), dried mealworms, and insect suet</li>
+                <li><strong>Robin/Wren:</strong> Dried mealworms and insect suet on a small tray (soft-food specialists)</li>
+                <li><strong>Finches:</strong> Goldfinches need Nyjer in fine-port tubes; greenfinch/chaffinch prefer hearts/safflower</li>
+                <li><strong>Low-residue options:</strong> Dried mealworms, safflower, insect-suet nuggets, Nyjer tubes</li>
+            </ul>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Food Type</th>
+                        <th>Great Tit</th>
+                        <th>Blue/Coal Tit</th>
+                        <th>Robin</th>
+                        <th>Wren</th>
+                        <th>Blackbird</th>
+                        <th>Dunnock</th>
+                        <th>House Sparrow</th>
+                        <th>Greenfinch</th>
+                        <th>Goldfinch</th>
+                        <th>Chaffinch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sunflower hearts (finely chipped)</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Sometimes</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Safflower</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Variable</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Peanuts (crushed/mesh)</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-no">Rare</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Dried mealworms</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Suet cakes/nuggets (insect blend)</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Nyjer seed (fine-port tube)</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                    </tr>
+                    <tr>
+                        <td>Pinhead oats (dry)</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Fruit pieces (apple/berry)</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Softbill mix/soaked soft bits</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Millet (white/red)</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box legend-yes"></div>
+                <span><strong>Yes</strong> - Readily eats</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box legend-limited"></div>
+                <span><strong>Limited/Sometimes</strong> - Occasional or conditional use</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box legend-no"></div>
+                <span><strong>No/Rare</strong> - Generally avoids or cannot access</span>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Note:</strong> To minimize mess on your windowsill, use dried mealworms, insect-suet nuggets, safflower, or contained formats like Nyjer tubes and peanut mesh. Offer small portions and clean regularly.</p>
+        </footer>
+    </div>
+</body>
+</html>
