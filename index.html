@@ -1,492 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bird Feeding Guide - Mannheim</title>
-    <style>
-        :root {
-            --color-primary: #2d7a4f;
-            --color-primary-dark: #1e5436;
-            --color-secondary: #52a876;
-            --color-background: #f4f9f6;
-            --color-surface: #ffffff;
-            --color-text: #1a3a2a;
-            --color-text-secondary: #4a6b5a;
-            --color-border: #c8ddd3;
-            --color-yes: #52a876;
-            --color-limited: #f0ad4e;
-            --color-no: #e8e8e8;
-            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+<!DOCTYPE html><html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>Smart Bird Feeding Guide</title> <style> :root{ --green:#2d7a4f; --green-dark:#1e5436; --green-soft:#dfeee6; --accent:#52a876; --gold:#f0ad4e; --bg:#f4f9f6; --surface:#fff; --text:#1a3a2a; --text-2:#4a6b5a; --border:#c8ddd3; --no:#e8e8e8; --chip:#edf7f1; --chip-hot:#fff2cc; --chip-cold:#d9ecff; --chip-warn:#fde9e6; } *{box-sizing:border-box;margin:0;padding:0} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,Arial,sans-serif;background:linear-gradient(135deg,#e8f5e9 0%,#c8e6c9 100%);color:var(--text);line-height:1.6;padding:20px} .app{max-width:1200px;margin:0 auto;background:var(--surface);border-radius:16px;box-shadow:0 8px 32px rgba(45,122,79,.15);overflow:hidden} header{background:linear-gradient(135deg,var(--green) 0%,var(--accent)100%);color:#fff;padding:28px} header h1{font-size:2.2rem;margin-bottom:6px} header p{opacity:.95}.controls{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:16px;padding:20px;border-bottom:1px solid var(--border);background:#f7fbf9}
+.control{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
+.control h4{font-size:.95rem;color:var(--green-dark);margin-bottom:8px}
+select, input[type="range"], input[type="number"]{width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{padding:6px 10px;border-radius:999px;background:var(--chip);font-size:.85rem;border:1px solid var(--border);cursor:pointer;user-select:none}
+.chip.active{background:#d1f5e2;border-color:#a3e3c1}
+.chip.warn{background:var(--chip-warn)}
+.kv{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.kv strong{color:var(--green-dark)}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+.panel{padding:18px 20px;border-bottom:1px solid var(--border)}
+.panel h3{color:var(--green-dark);margin-bottom:8px}
+.panel .desc{color:var(--text-2);font-size:.95rem}
 
-        body {
-            font-family: var(--font-family-base);
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            color: var(--color-text);
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
+.top-picks{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:12px}
+.pick{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px}
+.pick h5{font-size:.95rem;margin-bottom:6px}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.78rem;border:1px solid var(--border);color:#2b3d33}
+.pill.hot{background:var(--chip-hot)}
+.pill.cold{background:var(--chip-cold)}
+.pill.safe{background:#e7f7e7}
+.pill.warn{background:#fff2f0}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--color-surface);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(45, 122, 79, 0.15);
-            overflow: hidden;
-        }
+.table-wrap{padding:18px 20px;overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead{background:linear-gradient(135deg,var(--green-dark),var(--green))}
+th{color:#fff;text-align:left;padding:12px;border-right:1px solid rgba(255,255,255,.2);font-size:.9rem}
+th:last-child{border-right:none}
+tbody tr{border-bottom:1px solid var(--border)}
+td{padding:10px;text-align:center;font-size:.9rem}
+td:first-child{font-weight:600;text-align:left;color:var(--green-dark);background:#fafdfb}
+.yes{background:rgba(82,168,118,.15);color:#2d7a4f;font-weight:600}
+.limited{background:rgba(240,173,78,.15);color:#b5710b}
+.no{background:var(--no);color:#888}
+.subtle{color:var(--text-2);font-size:.9rem}
 
-        header {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: white;
-            padding: 32px;
-            text-align: center;
-        }
+.toolbar{display:flex;gap:10px;align-items:center;margin:8px 0 14px}
+.btn{padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer}
+.btn.primary{background:var(--green);color:#fff;border-color:transparent}
+.btn.ghost{background:#f6fbf8}
+.note{background:#fff;border-left:4px solid var(--accent);padding:10px 12px;border-radius:10px;margin-top:10px;color:var(--text-2)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px}
+.badge{display:inline-flex;align-items:center;gap:6px}
+.box{width:16px;height:16px;border-radius:3px;border:1px solid var(--border)}
+.b-yes{background:rgba(82,168,118,.3)}
+.b-limited{background:rgba(240,173,78,.3)}
+.b-no{background:var(--no)}
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
+.footnotes{padding:20px;border-top:1px solid var(--border);background:#fff}
+.footnotes h4{color:var(--green-dark);margin-bottom:8px}
+.footnotes ul{margin-left:18px;display:flex;flex-direction:column;gap:8px}
+.muted{color:#6b8678}
+.warning{color:#a54224}
+@media(max-width:900px){
+  .controls{grid-template-columns:1fr}
+  .top-picks{grid-template-columns:1fr 1fr}
+  .pick{min-height:90px}
+}</style></head> <body> <div class="app"> <header> <h1>🌿 Smart Bird Feeding Guide</h1> <p>Create a custom, condition-aware guide for common European garden birds. Inspired by Jim Carpenter’s The Joy of Bird Feeding (energy-first in winter, safe and clean in summer), adapted for EU species.</p> </header><!-- Controls -->
+<section class="controls">
+  <div class="control">
+    <h4>Geography (countries)</h4>
+    <select id="countrySelect" multiple size="6" title="Select one or more countries">
+      <option value="DE" selected>Germany</option>
+      <option value="AT">Austria</option>
+      <option value="CH">Switzerland</option>
+      <option value="FR">France</option>
+      <option value="NL">Netherlands</option>
+      <option value="BE">Belgium</option>
+      <option value="LU">Luxembourg</option>
+      <option value="DK">Denmark</option>
+      <option value="CZ">Czechia</option>
+      <option value="PL">Poland</option>
+      <option value="GB">United Kingdom</option>
+      <option value="IE">Ireland</option>
+      <option value="IT">Italy</option>
+      <option value="ES">Spain</option>
+      <option value="PT">Portugal</option>
+      <option value="SE">Sweden</option>
+      <option value="NO">Norway</option>
+      <option value="FI">Finland</option>
+      <option value="HU">Hungary</option>
+      <option value="SI">Slovenia</option>
+      <option value="HR">Croatia</option>
+    </select>
+    <div class="subtle" style="margin-top:6px">Bird list updates to those present in selected countries.</div>
+  </div>
 
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            font-weight: 400;
-        }
-
-        .table-container {
-            padding: 32px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-
-        thead {
-            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-            color: white;
-        }
-
-        th {
-            padding: 16px 12px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        th:first-child {
-            font-size: 1rem;
-            min-width: 200px;
-        }
-
-        th:last-child {
-            border-right: none;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid var(--color-border);
-            transition: background 0.2s ease;
-        }
-
-        tbody tr:hover {
-            background: #f8fcfa;
-        }
-
-        td {
-            padding: 14px 12px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        td:first-child {
-            text-align: left;
-            font-weight: 600;
-            color: var(--color-primary-dark);
-            background: #fafdfb;
-        }
-
-        .cell-yes {
-            background: rgba(82, 168, 118, 0.15);
-            color: var(--color-yes);
-            font-weight: 600;
-        }
-
-        .cell-limited {
-            background: rgba(240, 173, 78, 0.15);
-            color: var(--color-limited);
-            font-weight: 500;
-        }
-
-        .cell-no {
-            background: var(--color-no);
-            color: #999;
-            font-weight: 400;
-        }
-
-        .legend {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            padding: 20px 32px;
-            background: #f0f7f3;
-            border-top: 2px solid var(--color-border);
-            flex-wrap: wrap;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .legend-box {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-        }
-
-        .legend-yes {
-            background: rgba(82, 168, 118, 0.3);
-        }
-
-        .legend-limited {
-            background: rgba(240, 173, 78, 0.3);
-        }
-
-        .legend-no {
-            background: var(--color-no);
-        }
-
-        .notes {
-            padding: 28px 32px 40px;
-            background: #ffffff;
-            border-top: 2px solid var(--color-border);
-            color: var(--color-text-secondary);
-        }
-
-        .notes h2 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            color: var(--color-primary-dark);
-        }
-
-        .notes h3 {
-            font-size: 1.1rem;
-            margin-top: 24px;
-            margin-bottom: 12px;
-            color: var(--color-primary);
-        }
-
-        .notes ul {
-            margin-left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .notes li strong {
-            color: var(--color-primary-dark);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            header {
-                padding: 24px 16px;
-            }
-
-            .table-container {
-                padding: 16px;
-            }
-
-            th, td {
-                padding: 10px 6px;
-                font-size: 0.8rem;
-            }
-
-            th:first-child,
-            td:first-child {
-                min-width: 140px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🌿 Bird Feeding Guide</h1>
-            <p class="subtitle">Common Small Birds in Mannheim (Excluding Corvids)</p>
-        </header>
-
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Food Type</th>
-                        <th>Great Tit</th>
-                        <th>Blue/Coal Tit</th>
-                        <th>European Robin</th>
-                        <th>Eurasian Wren</th>
-                        <th>Common Blackbird</th>
-                        <th>Dunnock</th>
-                        <th>House Sparrow</th>
-                        <th>European Greenfinch</th>
-                        <th>European Goldfinch</th>
-                        <th>Common Chaffinch</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Sunflower hearts (finely chipped)</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Safflower</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Peanuts (crushed)</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Dried black soldier fly larvae</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Suet cakes/nuggets (plain fat)</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Suet cakes/nuggets (insect blend)</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Nyjer seed (fine-port tube)</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                    </tr>
-                    <tr>
-                        <td>Pinhead oats (dry)</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Fresh apple pieces</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Elderberries (fresh or dried)</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Rowan berries</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                    </tr>
-                    <tr>
-                        <td>Hawthorn berries</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                    </tr>
-                    <tr>
-                        <td>Holly berries</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                    </tr>
-                    <tr>
-                        <td>Soaked raisins/currants</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Millet (white/red)</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-box legend-yes"></div>
-                <span><strong>Yes</strong> - Readily eats</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box legend-limited"></div>
-                <span><strong>Limited/Sometimes</strong> - Occasional or conditional use</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box legend-no"></div>
-                <span><strong>No/Rare</strong> - Generally avoids or cannot access</span>
-            </div>
-        </div>
-
-        <div class="notes">
-            <h2>Helpful Notes</h2>
-            <ul>
-                <li><strong>Peanuts:</strong> Only unsalted, aflatoxin-tested bird peanuts. Offer crushed/through a mesh feeder and avoid whole peanuts during breeding season to prevent choking risks for chicks.</li>
-                <li><strong>Dried larvae (mealworms or BSFL):</strong> Rehydrate in warm water for 10–20 minutes to improve uptake and hydration. Always provide fresh water nearby.</li>
-                <li><strong>Suet/fat:</strong> Skip plastic net bags (leg/foot entanglement). Use feeders or crumble on a tray. Plain fat works in cold weather; insect blends attract insectivores.</li>
-                <li><strong>Raisins/currants:</strong> Toxic to dogs. Place where pets cannot access and clear leftovers at dusk.</li>
-                <li><strong>Nyjer:</strong> Needs a fine-port tube feeder to avoid spillage. Likely visitors in Mannheim include Goldfinch; in some winters, Siskin. Greenfinch may use it occasionally.</li>
-                <li><strong>Hygiene:</strong> Clean feeders/trays every 2–3 days in warm weather (weekly in winter) with 10% bleach, rinse, and dry. If you see sick birds (fluffed, drooling, difficulty swallowing), remove food and clean thoroughly for 2 weeks.</li>
-                <li><strong>Placement:</strong> Put feeders near cover (about 2–3 m) but with clear escape routes. Use window decals or place feeders within 1 m of windows to reduce collisions.</li>
-                <li><strong>Seasonal focus:</strong> Winter—high-energy foods (suet, sunflower hearts, peanuts). Spring/summer—more protein (insects), smaller amounts, and stricter hygiene. Year-round—fresh water for drinking and bathing.</li>
-                <li><strong>Native plants for Mannheim:</strong> Rowan (Vogelbeere), Hawthorn (Weißdorn), Elder (Holunder), and Holly (Stechpalme) provide natural food and shelter.</li>
-            </ul>
-        </div>
+  <div class="control">
+    <h4>Season & Temperature</h4>
+    <div class="chips">
+      <span class="chip" data-season="winter">Winter</span>
+      <span class="chip" data-season="spring">Spring</span>
+      <span class="chip" data-season="summer">Summer</span>
+      <span class="chip" data-season="autumn">Autumn</span>
     </div>
-</body>
-</html>
+    <div style="margin-top:10px">
+      <div class="kv">
+        <label for="tempRange"><strong>Temperature</strong> (°C):</label>
+        <input id="tempRange" type="range" min="-15" max="40" step="1" value="5" />
+        <input id="tempNum" type="number" min="-15" max="40" step="1" value="5" style="width:70px"/>
+      </div>
+      <div id="tempHint" class="subtle" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <div class="control">
+    <h4>Shortages & Conditions</h4>
+    <div class="chips">
+      <span class="chip" data-shortage="berries">Berries depleted</span>
+      <span class="chip" data-shortage="insects">Insect-poor (drought/cold snap)</span>
+      <span class="chip" data-shortage="hygiene">Strict hygiene mode</span>
+    </div>
+    <div class="note" id="contextNote" style="display:none; margin-top:10px"></div>
+  </div>
+
+  <div class="control">
+    <h4>Display Options</h4>
+    <div class="chips">
+      <span class="chip active" id="showAll">Show all foods</span>
+      <span class="chip" id="showRecommended">Show recommended now</span>
+    </div>
+    <div class="chips" style="margin-top:8px">
+      <span class="chip" id="heatSafe">Heat-adapted mode</span>
+      <span class="chip" id="breeding">Breeding season (no whole peanuts)</span>
+    </div>
+    <div class="subtle" style="margin-top:6px">Toggle to focus the table and top picks.</div>
+  </div>
+</section>
+
+<!-- Recommendations -->
+<section class="panel">
+  <h3>Top picks for your conditions</h3>
+  <div class="desc">Balanced by what your current birds will eat, energy needs, temperature, season, and shortages.</div>
+  <div id="topPicks" class="top-picks" aria-live="polite"></div>
+</section>
+
+<!-- Table -->
+<section class="table-wrap">
+  <div class="toolbar">
+    <button class="btn ghost" id="toggleLimited">Hide “No” foods</button>
+    <button class="btn primary" id="resetUI">Reset filters</button>
+  </div>
+  <table id="feedTable">
+    <thead id="tableHead"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="legend">
+    <span class="badge"><span class="box b-yes"></span> Yes – Readily eats</span>
+    <span class="badge"><span class="box b-limited"></span> Limited – Sometimes/conditional</span>
+    <span class="badge"><span class="box b-no"></span> No – Generally avoids / can’t access</span>
+  </div>
+  <div class="note" style="margin-top:12px">
+    Tip: In heat, prefer no-melt suet, seeds, and quick-consumed foods in shade; in cold, push high-energy items like suet, peanuts, and sunflower hearts.
+  </div>
+</section>
+
+<!-- Footnotes -->
+<section class="footnotes">
+  <h4>Helpful notes</h4>
+  <ul>
+    <li><strong>Peanuts:</strong> Only unsalted, aflatoxin-tested. Crush or use a mesh feeder. <em>During breeding</em> avoid whole peanuts (choking risk).</li>
+    <li><strong>Dried insects (mealworms/BSFL):</strong> Soak 10–20 min for hydration; always provide fresh water.</li>
+    <li><strong>Suet/fat:</strong> Avoid plastic net bags (entanglement). Use cages/trays. Plain suet in cold; use no-melt suet in warm weather.</li>
+    <li><strong>Raisins/currants:</strong> Toxic to dogs—place out of pet reach and clear leftovers at dusk.</li>
+    <li><strong>Nyjer:</strong> Use fine-port tube feeders to minimize spillage; likely visitors: Goldfinch, sometimes Greenfinch/Siskin.</li>
+    <li><strong>Hygiene:</strong> Clean feeders every 2–3 days in warm weather (weekly in winter) with 10% bleach, rinse, dry. If you see sick birds, pause feeding and deep-clean for 2 weeks.</li>
+    <li><strong>Placement:</strong> Near cover (~2–3 m) with clear escape routes. Add window decals or place feeders within 1 m of windows to reduce collisions.</li>
+  </ul>
+  <p class="muted" style="margin-top:8px">
+    Logic draws on general patterns highlighted in Jim Carpenter’s “The Joy of Bird Feeding” (energy-dense foods in winter, heat-safe practices, smart substitutions) and adapted for European species with common recommendations from RSPB/NABU. No verbatim content used.
+  </p>
+</section></div> <script> // Data model const foods = [ { id:'sunflower', name:'Sunflower hearts (finely chipped)', cat:'seed', energy:3, heat:'ok', notes:'High-energy seed; widely accepted; good year-round.' }, { id:'safflower', name:'Safflower', cat:'seed', energy:2, heat:'ok', notes:'Selective seed; fewer species take it.' }, { id:'peanuts', name:'Peanuts (crushed)', cat:'nut', energy:3, heat:'caution', notes:'Crushed/mesh only; no whole peanuts in breeding season.' }, { id:'bsfl', name:'Dried black soldier fly larvae / mealworms', cat:'insect', energy:2.5, heat:'ok', notes:'Rehydrate 10–20 min; key protein in spring/summer.' }, { id:'suet_plain', name:'Suet cakes/nuggets (plain fat)', cat:'fat', energy:3, heat:'avoid_hot', notes:'Use in cold; avoid softening/mess in heat.' }, { id:'suet_insect', name:'Suet cakes/nuggets (insect blend)', cat:'fat+insect', energy:3, heat:'avoid_hot', notes:'Great cold-weather attractor for insectivores.' }, { id:'suet_nomelt', name:'Suet (no-melt / summer formula)', cat:'fat', energy:3, heat:'ok', notes:'Safer in warm weather; still limit in heat waves.' }, { id:'nyjer', name:'Nyjer seed (fine-port tube)', cat:'seed', energy:2.5, heat:'ok', notes:'For finches; needs fine-port tube.' }, { id:'oats', name:'Pinhead oats (dry)', cat:'grain', energy:1.5, heat:'ok', notes:'Dry grain; limited use.' }, { id:'apple', name:'Fresh apple pieces', cat:'fruit', energy:1, heat:'ok', notes:'Offer in small chunks; attracts thrushes/robins.' }, { id:'elder', name:'Elderberries (fresh/dried)', cat:'fruit', energy:1, heat:'ok', notes:'Seasonal; popular with thrushes/robins.' }, { id:'rowan', name:'Rowan berries', cat:'fruit', energy:1, heat:'ok', notes:'Seasonal; thrush magnet.' }, { id:'hawthorn', name:'Hawthorn berries', cat:'fruit', energy:1, heat:'ok', notes:'Seasonal; dunnock/blackbird/robin.' }, { id:'holly', name:'Holly berries', cat:'fruit', energy:1, heat:'ok', notes:'Late-winter option; mainly blackbird.' }, { id:'raisins', name:'Soaked raisins/currants', cat:'fruit', energy:1, heat:'ok', notes:'Soak before serving; toxic to dogs.' }, { id:'millet', name:'Millet (white/red)', cat:'seed', energy:2, heat:'ok', notes:'Sparrows/finches; tray or tube feeder.' }, ]; // Species list (Central & Western Europe) const species = [ { id:'great_tit', name:'Great Tit', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'blue_coal_tit', name:'Blue/Coal Tit', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'robin', name:'European Robin', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'wren', name:'Eurasian Wren', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'blackbird', name:'Common Blackbird', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'dunnock', name:'Dunnock', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'house_sparrow', name:'House Sparrow', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'greenfinch', name:'European Greenfinch', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'goldfinch', name:'European Goldfinch', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, { id:'chaffinch', name:'Common Chaffinch', countries:['DE','AT','CH','FR','NL','BE','LU','DK','CZ','PL','GB','IE','IT','ES','PT','SE','NO','FI','HU','SI','HR'] }, ]; // Preferences: yes=2, limited=1, no=0 const Y=2,L=1,N=0; const prefs = { great_tit: { sunflower:Y, safflower:L, peanuts:Y, bsfl:Y, suet_plain:Y, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:L, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:L, millet:L }, blue_coal_tit: { sunflower:Y, safflower:L, peanuts:Y, bsfl:Y, suet_plain:Y, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:L, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:L, millet:L }, robin: { sunflower:Y, safflower:N, peanuts:Y, bsfl:Y, suet_plain:L, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:Y, apple:Y, elder:Y, rowan:Y, hawthorn:Y, holly:L, raisins:Y, millet:N }, wren: { sunflower:N, safflower:N, peanuts:L, bsfl:Y, suet_plain:L, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:N, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:N, millet:N }, blackbird: { sunflower:L, safflower:N, peanuts:L, bsfl:Y, suet_plain:Y, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:Y, apple:Y, elder:Y, rowan:Y, hawthorn:Y, holly:Y, raisins:Y, millet:N }, dunnock: { sunflower:L, safflower:N, peanuts:L, bsfl:Y, suet_plain:Y, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:Y, apple:L, elder:Y, rowan:L, hawthorn:Y, holly:L, raisins:Y, millet:N }, house_sparrow: { sunflower:Y, safflower:N, peanuts:Y, bsfl:Y, suet_plain:Y, suet_insect:Y, suet_nomelt:Y, nyjer:N, oats:L, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:N, millet:Y }, greenfinch: { sunflower:Y, safflower:L, peanuts:Y, bsfl:N, suet_plain:L, suet_insect:L, suet_nomelt:L, nyjer:L, oats:N, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:N, millet:L }, goldfinch: { sunflower:Y, safflower:N, peanuts:N, bsfl:N, suet_plain:N, suet_insect:N, suet_nomelt:N, nyjer:Y, oats:N, apple:N, elder:N, rowan:N, hawthorn:N, holly:N, raisins:N, millet:L }, chaffinch: { sunflower:Y, safflower:L, peanuts:Y, bsfl:L, suet_plain:L, suet_insect:L, suet_nomelt:L, nyjer:N, oats:L, apple:L, elder:L, rowan:N, hawthorn:N, holly:N, raisins:L, millet:L }, }; // UI State const state = { countries: ['DE'], season: null, // 'winter'|'spring'|'summer'|'autumn' tempC: 5, shortages: { berries:false, insects:false, hygiene:false }, showRecommendedOnly: false, hideNo: false, heatSafe: false, breeding: false }; // DOM refs const countrySelect = document.getElementById('countrySelect'); const seasonChips = [...document.querySelectorAll('.chip[data-season]')]; const shortageChips = [...document.querySelectorAll('.chip[data-shortage]')]; const showAllChip = document.getElementById('showAll'); const showRecommendedChip = document.getElementById('showRecommended'); const heatSafeChip = document.getElementById('heatSafe'); const breedingChip = document.getElementById('breeding'); const tempRange = document.getElementById('tempRange'); const tempNum = document.getElementById('tempNum'); const tempHint = document.getElementById('tempHint'); const contextNote = document.getElementById('contextNote'); const topPicksEl = document.getElementById('topPicks'); const tableHead = document.getElementById('tableHead'); const tableBody = document.getElementById('tableBody'); const hideNoBtn = document.getElementById('toggleLimited'); const resetBtn = document.getElementById('resetUI'); function getSelectedCountries(){ return [...countrySelect.options].filter(o=>o.selected).map(o=>o.value); } function birdsInCountries(countries){ return species.filter(sp => countries.some(c => sp.countries.includes(c))); } function acceptanceFor(foodId, spId){ return prefs[spId]?.[foodId] ?? N; } function describeTemp(t){ if(t <= -5) return 'Very cold: prioritize fat and high-energy foods.'; if(t <= 0) return 'Freezing: birds burn more kcal; push suet, peanuts, sunflower hearts.'; if(t <= 10) return 'Cool: mixed diet works; insects helpful in spring.'; if(t <= 20) return 'Mild: balanced seeds + some insects/fruit.'; if(t <= 27) return 'Warm: watch hygiene; offer seeds, fruit, soaked insects in shade.'; return 'Hot: avoid soft suet; use no-melt suet only, seed/nyjer, fruit early; change water often.'; } function contextMessage(){ const msgs = []; if(state.season === 'winter') msgs.push('Winter: energy-dense foods shine (suet, peanuts, sunflower hearts).'); if(state.season === 'spring') msgs.push('Spring: protein matters; offer soaked insects; extra hygiene.'); if(state.season === 'summer') msgs.push('Summer: heat-safe feeding; no-melt suet if used, swap foods frequently.'); if(state.season === 'autumn') msgs.push('Autumn: migration/overwinter prep; seeds + berries are great.'); if(state.shortages.berries) msgs.push('Berries depleted: supplement with apples, raisins (soaked), elder/rowan when available.'); if(state.shortages.insects) msgs.push('Insect-poor: boost insect suet and soaked BSFL/mealworms.'); if(state.shortages.hygiene) msgs.push('Strict hygiene: reduce soft/wet foods, downsize portions, clean every 2–3 days.'); if(state.breeding) msgs.push('Breeding season: no whole peanuts; prioritize insects and small, safe pieces.'); if(state.heatSafe) msgs.push('Heat-adapted: avoid plain suet; use no-melt suet, seeds, and fruit in shade.'); return msgs.join(' '); } // Scoring engine function foodScore(food, birds){ if(birds.length === 0) return -Infinity; // Acceptance score across visible birds const weights = birds.map(b => acceptanceFor(food.id, b.id)); const acceptAvg = weights.reduce((a,b)=>a+b,0) / (2*birds.length); // normalized 0..1 // Context weights let bonus = 0; // Energy emphasis by temp const isCold = state.tempC <= 0; const isHot = state.tempC >= 27; const isWarm = state.tempC > 20 && state.tempC < 27; // Base energy tilt bonus += (food.energy - 2) * (isCold ? 0.6 : isWarm ? 0.1 : 0.2); // more energy bonus in cold // Season tilts if(state.season === 'winter'){ if(food.cat === 'fat' || food.cat === 'fat+insect' || food.cat === 'nut' || (food.cat==='seed' && food.energy>=2.5)) bonus += 0.25; if(food.cat === 'fruit') bonus -= 0.05; } if(state.season === 'spring'){ if(food.cat === 'insect' || food.cat === 'fat+insect') bonus += 0.25; } if(state.season === 'summer'){ if(food.cat === 'insect') bonus += 0.2; if((food.cat==='fat' || food.cat==='fat+insect') && food.id!=='suet_nomelt') bonus -= 0.4; } if(state.season === 'autumn'){ if(food.cat === 'fruit' || food.cat === 'seed') bonus += 0.15; } // Shortages if(state.shortages.berries && food.cat === 'fruit') bonus += 0.35; if(state.shortages.insects && (food.cat === 'insect' || food.cat === 'fat+insect')) bonus += 0.35; // Heat safety if(state.heatSafe || isHot){ if(food.heat === 'avoid_hot') bonus -= 1.0; if(food.heat === 'caution') bonus -= 0.25; } // Breeding caution for peanuts: we handle in presentation, but small tilt away if(state.breeding && food.id==='peanuts') bonus -= 0.1; const score = acceptAvg + bonus; return score; } function buildTopPicks(foodsList, birds){ const scored = foodsList.map(f => ({...f, score: foodScore(f, birds)})) .filter(x => x.score > -0.3) .sort((a,b) => b.score - a.score) .slice(0,5); topPicksEl.innerHTML = scored.map(s => { const pills = []; if(state.tempC <= 0) pills.push('<span class="pill cold">High energy</span>'); if(state.tempC >= 27 && s.heat==='ok') pills.push('<span class="pill hot">Heat-safe</span>'); if(s.cat==='insect' || s.cat==='fat+insect') pills.push('<span class="pill">Protein</span>'); if(s.heat==='avoid_hot') pills.push('<span class="pill warn">Avoid in heat</span>'); if(s.id==='peanuts' && state.breeding) pills.push('<span class="pill warn">Crushed only</span>'); return `<div class="pick"> <h5>${s.name}</h5> <div class="subtle">${s.notes}</div> <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${pills.join('')}</div> </div>`; }).join(''); if(scored.length === 0){ topPicksEl.innerHTML = '<div class="subtle">No strong matches. Try broadening filters.</div>'; } } function buildTable(foodsList, birds){ // Header const th = ['<th>Food Type</th>'].concat(birds.map(b => `<th>${b.name}</th>`)).join(''); tableHead.innerHTML = `<tr>${th}</tr>`; // Rows const rows = []; foodsList.forEach(food => { const ratingCells = birds.map(b => { const v = acceptanceFor(food.id, b.id); let cls = v===Y?'yes': v===L?'limited':'no'; let label = v===Y?'Yes': v===L?'Limited':'No'; return `<td class="${cls}">${label}</td>`; }).join(''); // filter “recommended only” const showRecommended = state.showRecommendedOnly ? foodScore(food, birds) > 0.75 : true; // hide rows with all 'No' when hideNo is true const allNo = birds.every(b => acceptanceFor(food.id, b.id) === N); if(showRecommended && (!state.hideNo || !allNo)){ rows.push(`<tr><td>${food.name}</td>${ratingCells}</tr>`); } }); tableBody.innerHTML = rows.join('') || `<tr><td colspan="${birds.length+1}" class="subtle">No rows match your filters.</td></tr>`; } function update(){ state.countries = getSelectedCountries(); const birds = birdsInCountries(state.countries); // Temp hint + context note tempHint.textContent = describeTemp(state.tempC); const msg = contextMessage(); contextNote.style.display = msg ? 'block' : 'none'; contextNote.textContent = msg; // Filter foods if “heat-adapted mode” let foodsNow = [...foods]; if(state.heatSafe){ foodsNow = foodsNow.filter(f => f.heat !== 'avoid_hot' || f.id === 'suet_nomelt'); } // Build UI components buildTopPicks(foodsNow, birds); buildTable(foodsNow, birds); } // Event wiring countrySelect.addEventListener('change', update); seasonChips.forEach(ch => { ch.addEventListener('click', () => { seasonChips.forEach(c => c.classList.remove('active')); if(state.season === ch.dataset.season){ state.season = null; // toggle off } else { ch.classList.add('active'); state.season = ch.dataset.season; } update(); }); }); shortageChips.forEach(ch => { ch.addEventListener('click', () => { ch.classList.toggle('active'); state.shortages[ch.dataset.shortage] = ch.classList.contains('active'); update(); }); }); showAllChip.addEventListener('click', () => { state.showRecommendedOnly = false; showAllChip.classList.add('active'); showRecommendedChip.classList.remove('active'); update(); }); showRecommendedChip.addEventListener('click', () => { state.showRecommendedOnly = true; showRecommendedChip.classList.add('active'); showAllChip.classList.remove('active'); update(); }); heatSafeChip.addEventListener('click', () => { heatSafeChip.classList.toggle('active'); state.heatSafe = heatSafeChip.classList.contains('active'); update(); }); breedingChip.addEventListener('click', () => { breedingChip.classList.toggle('active'); state.breeding = breedingChip.classList.contains('active'); update(); }); [tempRange, tempNum].forEach(el => { el.addEventListener('input', () => { const v = Number(el.value); tempRange.value = v; tempNum.value = v; state.tempC = v; update(); }); }); hideNoBtn.addEventListener('click', () => { state.hideNo = !state.hideNo; hideNoBtn.textContent = state.hideNo ? 'Show all foods' : 'Hide “No” foods'; update(); }); resetBtn.addEventListener('click', () => { // Reset selections [...countrySelect.options].forEach(o => o.selected = (o.value==='DE')); seasonChips.forEach(c => c.classList.remove('active')); shortageChips.forEach(c => c.classList.remove('active')); showAllChip.classList.add('active'); showRecommendedChip.classList.remove('active'); heatSafeChip.classList.remove('active'); breedingChip.classList.remove('active'); tempRange.value = 5; tempNum.value = 5; Object.assign(state, { countries:['DE'], season:null, tempC:5, shortages:{berries:false, insects:false, hygiene:false}, showRecommendedOnly:false, hideNo:false, heatSafe:false, breeding:false }); hideNoBtn.textContent = 'Hide “No” foods'; update(); }); // Init update(); </script></body> </html>
