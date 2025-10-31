@@ -63,26 +63,6 @@
             font-weight: 400;
         }
 
-        .intro {
-            padding: 24px 32px;
-            background: #f0f7f3;
-            border-bottom: 2px solid var(--color-border);
-        }
-
-        .intro p {
-            margin-bottom: 12px;
-            color: var(--color-text-secondary);
-        }
-
-        .intro ul {
-            margin-left: 24px;
-            color: var(--color-text-secondary);
-        }
-
-        .intro li {
-            margin-bottom: 6px;
-        }
-
         .table-container {
             padding: 32px;
             overflow-x: auto;
@@ -190,12 +170,35 @@
             background: var(--color-no);
         }
 
-        footer {
-            padding: 24px 32px;
-            text-align: center;
+        .notes {
+            padding: 28px 32px 40px;
+            background: #ffffff;
+            border-top: 2px solid var(--color-border);
             color: var(--color-text-secondary);
-            font-size: 0.9rem;
-            background: #fafdfb;
+        }
+
+        .notes h2 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--color-primary-dark);
+        }
+
+        .notes h3 {
+            font-size: 1.1rem;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+        }
+
+        .notes ul {
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notes li strong {
+            color: var(--color-primary-dark);
         }
 
         @media (max-width: 768px) {
@@ -215,7 +218,7 @@
                 padding: 24px 16px;
             }
 
-            .intro, .table-container {
+            .table-container {
                 padding: 16px;
             }
 
@@ -238,16 +241,6 @@
             <p class="subtitle">Common Small Birds in Mannheim (Excluding Corvids)</p>
         </header>
 
-        <div class="intro">
-            <p><strong>Quick Tips for Your Windowsill:</strong></p>
-            <ul>
-                <li><strong>Tits:</strong> Crushed peanuts, sunflower hearts (chipped), dried mealworms, and insect suet</li>
-                <li><strong>Robin/Wren:</strong> Dried mealworms and insect suet on a small tray (soft-food specialists)</li>
-                <li><strong>Finches:</strong> Goldfinches need Nyjer in fine-port tubes; greenfinch/chaffinch prefer hearts/safflower</li>
-                <li><strong>Low-residue options:</strong> Dried mealworms, safflower, insect-suet nuggets, Nyjer tubes</li>
-            </ul>
-        </div>
-
         <div class="table-container">
             <table>
                 <thead>
@@ -255,14 +248,14 @@
                         <th>Food Type</th>
                         <th>Great Tit</th>
                         <th>Blue/Coal Tit</th>
-                        <th>Robin</th>
-                        <th>Wren</th>
-                        <th>Blackbird</th>
+                        <th>European Robin</th>
+                        <th>Eurasian Wren</th>
+                        <th>Common Blackbird</th>
                         <th>Dunnock</th>
                         <th>House Sparrow</th>
-                        <th>Greenfinch</th>
-                        <th>Goldfinch</th>
-                        <th>Chaffinch</th>
+                        <th>European Greenfinch</th>
+                        <th>European Goldfinch</th>
+                        <th>Common Chaffinch</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -270,51 +263,64 @@
                         <td>Sunflower hearts (finely chipped)</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Sometimes</td>
-                        <td class="cell-no">Rare</td>
-                        <td class="cell-no">Rare</td>
-                        <td class="cell-no">Rare</td>
-                        <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                     </tr>
                     <tr>
                         <td>Safflower</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
-                        <td class="cell-limited">Variable</td>
-                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-no">No</td>
                         <td class="cell-limited">Limited</td>
                     </tr>
                     <tr>
-                        <td>Peanuts (crushed/mesh)</td>
+                        <td>Peanuts (crushed)</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
-                        <td class="cell-no">Rare</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">Rare</td>
-                        <td class="cell-no">Rare</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-no">No</td>
                         <td class="cell-yes">Yes</td>
                     </tr>
                     <tr>
-                        <td>Dried mealworms</td>
+                        <td>Dried black soldier fly larvae</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Suet cakes/nuggets (plain fat)</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-limited">Limited</td>
                     </tr>
@@ -340,7 +346,7 @@
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-no">No</td>
                     </tr>
@@ -349,33 +355,85 @@
                         <td class="cell-limited">Limited</td>
                         <td class="cell-limited">Limited</td>
                         <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
-                        <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-no">No</td>
-                        <td class="cell-limited">Limited</td>
-                    </tr>
-                    <tr>
-                        <td>Fruit pieces (apple/berry)</td>
-                        <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-yes">Yes</td>
-                        <td class="cell-no">No</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-no">No</td>
                         <td class="cell-limited">Limited</td>
                     </tr>
                     <tr>
-                        <td>Softbill mix/soaked soft bits</td>
+                        <td>Fresh apple pieces</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Elderberries (fresh or dried)</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                    </tr>
+                    <tr>
+                        <td>Rowan berries</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                    </tr>
+                    <tr>
+                        <td>Hawthorn berries</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                    </tr>
+                    <tr>
+                        <td>Holly berries</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-yes">Yes</td>
+                        <td class="cell-limited">Limited</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                        <td class="cell-no">No</td>
+                    </tr>
+                    <tr>
+                        <td>Soaked raisins/currants</td>
                         <td class="cell-limited">Limited</td>
                         <td class="cell-limited">Limited</td>
                         <td class="cell-yes">Yes</td>
-                        <td class="cell-yes">Yes</td>
+                        <td class="cell-no">No</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-no">No</td>
@@ -393,7 +451,7 @@
                         <td class="cell-no">No</td>
                         <td class="cell-yes">Yes</td>
                         <td class="cell-limited">Limited</td>
-                        <td class="cell-no">No</td>
+                        <td class="cell-limited">Limited</td>
                         <td class="cell-limited">Limited</td>
                     </tr>
                 </tbody>
@@ -415,9 +473,20 @@
             </div>
         </div>
 
-        <footer>
-            <p><strong>Note:</strong> To minimize mess on your windowsill, use dried mealworms, insect-suet nuggets, safflower, or contained formats like Nyjer tubes and peanut mesh. Offer small portions and clean regularly.</p>
-        </footer>
+        <div class="notes">
+            <h2>Helpful Notes</h2>
+            <ul>
+                <li><strong>Peanuts:</strong> Only unsalted, aflatoxin-tested bird peanuts. Offer crushed/through a mesh feeder and avoid whole peanuts during breeding season to prevent choking risks for chicks.</li>
+                <li><strong>Dried larvae (mealworms or BSFL):</strong> Rehydrate in warm water for 10–20 minutes to improve uptake and hydration. Always provide fresh water nearby.</li>
+                <li><strong>Suet/fat:</strong> Skip plastic net bags (leg/foot entanglement). Use feeders or crumble on a tray. Plain fat works in cold weather; insect blends attract insectivores.</li>
+                <li><strong>Raisins/currants:</strong> Toxic to dogs. Place where pets cannot access and clear leftovers at dusk.</li>
+                <li><strong>Nyjer:</strong> Needs a fine-port tube feeder to avoid spillage. Likely visitors in Mannheim include Goldfinch; in some winters, Siskin. Greenfinch may use it occasionally.</li>
+                <li><strong>Hygiene:</strong> Clean feeders/trays every 2–3 days in warm weather (weekly in winter) with 10% bleach, rinse, and dry. If you see sick birds (fluffed, drooling, difficulty swallowing), remove food and clean thoroughly for 2 weeks.</li>
+                <li><strong>Placement:</strong> Put feeders near cover (about 2–3 m) but with clear escape routes. Use window decals or place feeders within 1 m of windows to reduce collisions.</li>
+                <li><strong>Seasonal focus:</strong> Winter—high-energy foods (suet, sunflower hearts, peanuts). Spring/summer—more protein (insects), smaller amounts, and stricter hygiene. Year-round—fresh water for drinking and bathing.</li>
+                <li><strong>Native plants for Mannheim:</strong> Rowan (Vogelbeere), Hawthorn (Weißdorn), Elder (Holunder), and Holly (Stechpalme) provide natural food and shelter.</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
